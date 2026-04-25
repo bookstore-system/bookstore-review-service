@@ -1,21 +1,45 @@
-version: '3.8'
-
 services:
+  review-db:
+    image: mysql:8.0
+    container_name: bookstore_review_db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: bookstore_review_db
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - review-db-data:/var/lib/mysql
+    networks:
+      - bookstore-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-ppassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
   review-service:
-    build: 
+    build:
       context: .
       target: build
     container_name: review-service
+    working_dir: /app
     ports:
       - "8087:8080"
     volumes:
-      - .:/build
+      - .:/app
       - ~/.m2:/root/.m2
-    command: mvn spring-boot:run -Dspring-boot.run.profiles=docker
+    command: mvn spring-boot:run -Dspring-boot.run.profiles=dev
     environment:
-      SPRING_PROFILES_ACTIVE: docker
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_MVC_PATHMATCH_MATCHING_STRATEGY: ant_path_matcher
+    depends_on:
+      review-db:
+        condition: service_healthy
     networks:
       - bookstore-network
+
+volumes:
+  review-db-data:
 
 networks:
   bookstore-network:

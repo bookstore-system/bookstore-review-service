@@ -1,0 +1,9 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:mysql://review-db:3306/bookstore_review_db?createDatabaseIfNotExist=true
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
