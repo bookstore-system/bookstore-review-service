@@ -19,7 +19,7 @@ import java.util.UUID;
  * Cho phép người dùng thêm đánh giá và xem danh sách đánh giá của sách
  */
 @RestController
-@RequestMapping("/api/review")
+@RequestMapping("/api/v1/review")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ReviewController {
