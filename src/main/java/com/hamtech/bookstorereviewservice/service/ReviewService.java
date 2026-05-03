@@ -12,4 +12,6 @@ public interface ReviewService {
     ReviewResponse addReviewBook(CreateReviewRequest request);
 
     Page<ReviewResponse> getReviewsByBookId(UUID bookId, int page, int size);
+
+    long countReviewsByUserId(UUID userId);
 }
