@@ -59,6 +59,7 @@ public class SecurityConfig {
 
                         // Review
                         "/api/review/**",
+                        "/api/v1/reviews/**",
         };
 
         @Value("${jwt.signerKey}")
