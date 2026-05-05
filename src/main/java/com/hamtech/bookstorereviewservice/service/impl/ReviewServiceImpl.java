@@ -65,4 +65,10 @@ public class ReviewServiceImpl implements ReviewService {
         Page<Review> reviews = reviewRepository.findByBookIdOrderByCreatedAtDesc(bookId, pageable);
         return reviews.map(reviewMapper::toResponse);
     }
+
+    @Override
+    public long countReviewsByUserId(UUID userId) {
+        Long count = reviewRepository.countByUserID(userId);
+        return count != null ? count : 0L;
+    }
 }

@@ -22,6 +22,9 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
     Optional<Review> findByBookIDAndUserID(UUID bookID, UUID userID);
     boolean existsByBookIDAndUserID(UUID bookID, UUID userID);
 
+    // Đếm số đánh giá của user
+    Long countByUserID(UUID userID);
+
     // Tính trung bình sao
     @Query("SELECT AVG(r.rating) FROM Review r WHERE r.bookID = :bookId")
     Double calculateAverageRating(@Param("bookId") UUID bookId);

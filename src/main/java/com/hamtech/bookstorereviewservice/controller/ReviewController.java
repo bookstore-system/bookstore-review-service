@@ -3,6 +3,7 @@ package com.hamtech.bookstorereviewservice.controller;
 import com.hamtech.bookstorereviewservice.model.dto.request.reviewrequest.CreateReviewRequest;
 import com.hamtech.bookstorereviewservice.model.dto.response.ApiResponse;
 import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewResponse;
+import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.UserReviewCountResponse;
 import com.hamtech.bookstorereviewservice.service.ReviewService;
 import com.hamtech.bookstorereviewservice.service.impl.ReviewServiceImpl;
 import jakarta.validation.Valid;
@@ -19,7 +20,7 @@ import java.util.UUID;
  * Cho phép người dùng thêm đánh giá và xem danh sách đánh giá của sách
  */
 @RestController
-@RequestMapping("/api/v1/review")
+@RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ReviewController {
@@ -62,6 +63,21 @@ public class ReviewController {
                 .code(1000)
                 .message("Lấy danh sách đánh giá thành công")
                 .result(reviews)
+                .build();
+    }
+
+    /**
+     * Đếm tổng số đánh giá của một người dùng
+     * 
+     * @param userId ID của người dùng
+     * @return Số lượng đánh giá (trả về 0 nếu chưa có)
+     */
+    @GetMapping("/users/{userId}/count")
+    public UserReviewCountResponse countReviewsByUserId(@PathVariable UUID userId) {
+        long totalReviews = reviewService.countReviewsByUserId(userId);
+        return UserReviewCountResponse.builder()
+                .userId(userId)
+                .totalReviews(totalReviews)
                 .build();
     }
 }

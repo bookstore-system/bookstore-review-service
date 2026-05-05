@@ -4,6 +4,11 @@ spring:
       matching-strategy: ant_path_matcher
   application:
     name: bookstore-review-service
+  datasource:
+    url: jdbc:mysql://localhost:3307/bookstore_review_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: password # Theo đúng docker-compose.yml
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
