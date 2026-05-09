@@ -7,3 +7,11 @@ spring:
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+clients:
+  book-service:
+    url: ${BOOK_SERVICE_URL:}
+  user-service:
+    url: ${USER_SERVICE_URL:}
+  order-service:
+    url: ${ORDER_SERVICE_URL:}
