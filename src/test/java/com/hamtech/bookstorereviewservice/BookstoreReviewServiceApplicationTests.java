@@ -1,10 +1,12 @@
 package com.hamtech.bookstorereviewservice;
 
+import com.hamtech.bookstorereviewservice.client.BookServiceClient;
+import com.hamtech.bookstorereviewservice.client.OrderServiceClient;
+import com.hamtech.bookstorereviewservice.client.UserServiceClient;
+import com.hamtech.bookstorereviewservice.repository.ReviewRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import com.hamtech.bookstorereviewservice.repository.ReviewRepository;
 
 @SpringBootTest(classes = BookstoreReviewServiceApplication.class, properties = {
         "spring.autoconfigure.exclude=" +
@@ -16,6 +18,15 @@ class BookstoreReviewServiceApplicationTests {
 
     @MockBean
     ReviewRepository reviewRepository;
+
+    @MockBean
+    BookServiceClient bookServiceClient;
+
+    @MockBean
+    OrderServiceClient orderServiceClient;
+
+    @MockBean
+    UserServiceClient userServiceClient;
 
     @Test
     void contextLoads() {
