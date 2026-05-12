@@ -5,7 +5,8 @@ import com.hamtech.bookstorereviewservice.model.dto.response.ApiResponse;
 import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewResponse;
 import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.UserReviewCountResponse;
 import com.hamtech.bookstorereviewservice.service.ReviewService;
-import com.hamtech.bookstorereviewservice.service.impl.ReviewServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Tag(name = "Reviews", description = "APIs quản lý đánh giá sách")
 public class ReviewController {
     ReviewService reviewService;
 
@@ -34,6 +36,7 @@ public class ReviewController {
      * @return Thông tin đánh giá vừa được tạo
      */
     @PostMapping("/book/add")
+    @Operation(summary = "Thêm đánh giá cho sách", description = "Yêu cầu người dùng đã mua sách và chưa đánh giá trước đó.")
     public ApiResponse<ReviewResponse> addReviewBook(@Valid @RequestBody CreateReviewRequest request) {
         ReviewResponse review = reviewService.addReviewBook(request);
         return ApiResponse.<ReviewResponse>builder()
@@ -53,6 +56,7 @@ public class ReviewController {
      * @return Danh sách đánh giá được phân trang bao gồm thông tin người đánh giá, rating, nội dung và thời gian
      */
     @GetMapping("/book/{bookId}")
+    @Operation(summary = "Lấy danh sách đánh giá theo bookId", description = "Trả về danh sách đánh giá theo phân trang, sắp xếp mới nhất trước.")
     public ApiResponse<Page<ReviewResponse>> getListReviewByBookId(
             @PathVariable UUID bookId,
             @RequestParam(defaultValue = "0") int page,
@@ -73,6 +77,7 @@ public class ReviewController {
      * @return Số lượng đánh giá (trả về 0 nếu chưa có)
      */
     @GetMapping("/users/{userId}/count")
+    @Operation(summary = "Đếm số review của user", description = "Trả về tổng số review mà user đã tạo.")
     public UserReviewCountResponse countReviewsByUserId(@PathVariable UUID userId) {
         long totalReviews = reviewService.countReviewsByUserId(userId);
         return UserReviewCountResponse.builder()
