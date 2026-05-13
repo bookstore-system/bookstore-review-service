@@ -18,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -27,14 +26,12 @@ import java.util.UUID;
 public class ReviewServiceImpl implements ReviewService {
     ReviewRepository reviewRepository;
     ReviewMapper reviewMapper;
-    // UserRepository userRepository;
-    // BookRepository bookRepository;
 
     @Transactional
     @Override
     public ReviewResponse addReviewBook(CreateReviewRequest request) {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
-        
+
         UUID userUUID;
         // Ưu tiên dùng userId từ body nếu có truyền lên (dùng để test)
         if (request.getUserId() != null) {
@@ -53,11 +50,10 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewMapper.toEntity(request);
         review.setUserID(userUUID);
         review.setBookID(request.getBookId());
-    
+
         Review savedReview = reviewRepository.save(review);
         return reviewMapper.toResponse(savedReview);
     }
-
 
     @Override
     public Page<ReviewResponse> getReviewsByBookId(UUID bookId, int page, int size) {
