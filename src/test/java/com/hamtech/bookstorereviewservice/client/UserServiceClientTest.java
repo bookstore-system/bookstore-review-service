@@ -2,6 +2,7 @@ package com.hamtech.bookstorereviewservice.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hamtech.bookstorereviewservice.BookstoreReviewServiceApplication;
+import com.hamtech.bookstorereviewservice.model.dto.response.ApiResponse;
 import com.hamtech.bookstorereviewservice.repository.ReviewRepository;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -64,16 +65,23 @@ class UserServiceClientTest {
         body.setDisplayName("Nguyễn Văn A");
         body.setAvatarUrl("https://example.com/avatar/user1.png");
 
+        ApiResponse<UserBasicInfoResponse> wrapped = ApiResponse.<UserBasicInfoResponse>builder()
+                .code(200)
+                .message("OK")
+                .result(body)
+                .build();
+
         mockWebServer.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .addHeader("Content-Type", "application/json")
-                .setBody(objectMapper.writeValueAsString(body)));
+                .setBody(objectMapper.writeValueAsString(wrapped)));
 
-        UserBasicInfoResponse res = userServiceClient.getUserBasicInfo(userId);
+        ApiResponse<UserBasicInfoResponse> res = userServiceClient.getUserBasicInfo(userId);
         assertThat(res).isNotNull();
-        assertThat(res.getUserId()).isEqualTo(userId);
-        assertThat(res.getDisplayName()).isEqualTo("Nguyễn Văn A");
-        assertThat(res.getAvatarUrl()).isEqualTo("https://example.com/avatar/user1.png");
+        assertThat(res.getResult()).isNotNull();
+        assertThat(res.getResult().getUserId()).isEqualTo(userId);
+        assertThat(res.getResult().getDisplayName()).isEqualTo("Nguyễn Văn A");
+        assertThat(res.getResult().getAvatarUrl()).isEqualTo("https://example.com/avatar/user1.png");
 
         RecordedRequest req = mockWebServer.takeRequest();
         assertThat(req.getMethod()).isEqualTo("GET");

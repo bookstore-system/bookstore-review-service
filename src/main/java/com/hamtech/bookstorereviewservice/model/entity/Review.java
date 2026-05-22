@@ -57,6 +57,10 @@ public class Review {
     @Column(name="book_id")
     private UUID bookID;
 
+    /** Mỗi đơn hàng có thể đánh giá từng sách một lần (cùng sách, hai đơn → hai review). */
+    @Column(name = "order_id")
+    UUID orderID;
+
     @Column(name = "user_name")
     String userName;
 

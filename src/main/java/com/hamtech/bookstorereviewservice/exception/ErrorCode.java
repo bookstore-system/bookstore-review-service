@@ -44,7 +44,7 @@ public enum ErrorCode {
     TOO_MANY_REQUESTS(HttpStatus.TOO_MANY_REQUESTS, 4290, "OTP chưa hết hạn, vui lòng thử lại sau."),
     USER_NOT_EXISTED(HttpStatus.NOT_FOUND, 2002, "User not found."),
     BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Book not found."),
-    REVIEW_ALREADY_EXISTS(HttpStatus.CONFLICT, 3002, "User has already reviewed this book."),
+    REVIEW_ALREADY_EXISTS(HttpStatus.CONFLICT, 3002, "Bạn đã đánh giá sách này trong đơn hàng này rồi."),
     USERNAME_INVALID(HttpStatus.BAD_REQUEST, 2003, "Username must be at least 3 characters."),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, 2004, "Password must be at least 8 characters."),
     INVALID_KEY(HttpStatus.BAD_REQUEST, 2005, "Invalid API key."),

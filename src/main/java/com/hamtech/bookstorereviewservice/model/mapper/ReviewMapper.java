@@ -15,6 +15,7 @@ public interface ReviewMapper {
     @Mapping(target = "reviewID", ignore = true)
     @Mapping(target = "userID", ignore = true)
     @Mapping(target = "bookID", ignore = true)
+    @Mapping(target = "orderID", ignore = true)
     @Mapping(target = "helpfulCount", ignore = true)
     @Mapping(target = "verifiedPurchase", ignore = true)
     Review toEntity(CreateReviewRequest request);

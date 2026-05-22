@@ -5,6 +5,7 @@ import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.Revi
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ReviewService {
@@ -12,6 +13,10 @@ public interface ReviewService {
     ReviewResponse addReviewBook(CreateReviewRequest request);
 
     Page<ReviewResponse> getReviewsByBookId(UUID bookId, int page, int size);
+
+    List<UUID> getReviewedBookIdsByOrderId(UUID orderId);
+
+    List<ReviewResponse> getReviewsByOrderId(UUID orderId);
 
     long countReviewsByUserId(UUID userId);
 }
