@@ -14,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -55,6 +56,28 @@ public class ReviewController {
      * @param size Kích thước trang (mặc định: 10)
      * @return Danh sách đánh giá được phân trang bao gồm thông tin người đánh giá, rating, nội dung và thời gian
      */
+    @GetMapping("/order/{orderId}/reviewed-books")
+    @Operation(summary = "Sách đã đánh giá trong đơn", description = "Trả về danh sách bookId đã review trong orderId (ẩn form trên UI đơn hàng).")
+    public ApiResponse<List<UUID>> getReviewedBookIdsByOrder(@PathVariable UUID orderId) {
+        List<UUID> bookIds = reviewService.getReviewedBookIdsByOrderId(orderId);
+        return ApiResponse.<List<UUID>>builder()
+                .code(1000)
+                .message("Lấy danh sách sách đã đánh giá thành công")
+                .result(bookIds)
+                .build();
+    }
+
+    @GetMapping("/order/{orderId}")
+    @Operation(summary = "Đánh giá theo đơn hàng", description = "Trả về toàn bộ review đã gửi trong đơn (hiển thị trên trang chi tiết đơn).")
+    public ApiResponse<List<ReviewResponse>> getReviewsByOrder(@PathVariable UUID orderId) {
+        List<ReviewResponse> reviews = reviewService.getReviewsByOrderId(orderId);
+        return ApiResponse.<List<ReviewResponse>>builder()
+                .code(1000)
+                .message("Lấy đánh giá theo đơn hàng thành công")
+                .result(reviews)
+                .build();
+    }
+
     @GetMapping("/book/{bookId}")
     @Operation(summary = "Lấy danh sách đánh giá theo bookId", description = "Trả về danh sách đánh giá theo phân trang, sắp xếp mới nhất trước.")
     public ApiResponse<Page<ReviewResponse>> getListReviewByBookId(

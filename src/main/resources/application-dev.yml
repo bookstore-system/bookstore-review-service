@@ -1,3 +1,8 @@
+app:
+  jwt:
+    keys-dir: ${APP_JWT_KEYS_DIR:./key}
+    public-key-file: public.pem
+
 spring:
   mvc:
     pathmatch:

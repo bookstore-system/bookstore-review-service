@@ -15,6 +15,7 @@ public class ReviewResponse {
     UUID reviewID;
     UUID userID;
     UUID bookID;
+    UUID orderID;
     String userName;
     String userAvatar;
     Integer rating;

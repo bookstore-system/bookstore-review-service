@@ -16,6 +16,9 @@ public class CreateReviewRequest {
     @NotNull(message = "Book ID không được để trống")
     UUID bookId;
 
+    @NotNull(message = "Order ID không được để trống")
+    UUID orderId;
+
     @NotNull(message = "Rating không được để trống")
     @Min(value = 1, message = "Rating phải từ 1-5")
     @Max(value = 5, message = "Rating phải từ 1-5")
@@ -31,4 +34,4 @@ public class CreateReviewRequest {
     LocalDateTime createdAt;
 }
 
-
+

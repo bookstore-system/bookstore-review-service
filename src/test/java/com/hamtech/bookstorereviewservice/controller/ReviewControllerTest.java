@@ -45,9 +45,11 @@ class ReviewControllerTest {
         UUID reviewId = UUID.randomUUID();
         UUID userId = UUID.randomUUID();
         UUID bookId = UUID.randomUUID();
+        UUID orderId = UUID.randomUUID();
 
         CreateReviewRequest req = CreateReviewRequest.builder()
                 .bookId(bookId)
+                .orderId(orderId)
                 .rating(5)
                 .comment("Sách rất hay và đáng đọc.")
                 .userId(userId)
