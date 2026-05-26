@@ -1,0 +1,22 @@
+app:
+  jwt:
+    keys-dir: ${APP_JWT_KEYS_DIR:./key}
+    public-key-file: public.pem
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:mysql://review-db:3306/bookstore_review_db?createDatabaseIfNotExist=true
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+clients:
+  book-service:
+    url: ${BOOK_SERVICE_URL:}
+  user-service:
+    url: ${USER_SERVICE_URL:}
+  order-service:
+    url: ${ORDER_SERVICE_URL:}

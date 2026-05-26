@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: review-service-config
+data:
+  SPRING_DATASOURCE_URL: "jdbc:mysql://bookstore-db-do-user-36177370-0.h.db.ondigitalocean.com:25060/bookstore_review?useSSL=true&requireSSL=true&serverTimezone=UTC"
+  BOOK_SERVICE_URL: "http://book-service:8080"
+  USER_SERVICE_URL: "http://user-service:8080"
+  ORDER_SERVICE_URL: "http://order-service:8080"
