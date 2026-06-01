@@ -3,6 +3,7 @@ package com.hamtech.bookstorereviewservice.controller;
 import com.hamtech.bookstorereviewservice.model.dto.request.reviewrequest.CreateReviewRequest;
 import com.hamtech.bookstorereviewservice.model.dto.response.ApiResponse;
 import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewResponse;
+import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewSummaryResponse;
 import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.UserReviewCountResponse;
 import com.hamtech.bookstorereviewservice.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -90,6 +91,17 @@ public class ReviewController {
                 .code(1000)
                 .message("Lấy danh sách đánh giá thành công")
                 .result(reviews)
+                .build();
+    }
+
+    @GetMapping("/book/{bookId}/summary")
+    @Operation(summary = "Tong hop danh gia theo bookId", description = "Tra ve averageRating, totalReviews va phan bo sao.")
+    public ApiResponse<ReviewSummaryResponse> getReviewSummaryByBookId(@PathVariable UUID bookId) {
+        ReviewSummaryResponse summary = reviewService.getReviewSummaryByBookId(bookId);
+        return ApiResponse.<ReviewSummaryResponse>builder()
+                .code(1000)
+                .message("Lay tong hop danh gia thanh cong")
+                .result(summary)
                 .build();
     }
 

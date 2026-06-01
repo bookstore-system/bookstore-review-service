@@ -7,6 +7,7 @@ import com.hamtech.bookstorereviewservice.exception.ErrorCode;
 import com.hamtech.bookstorereviewservice.model.dto.request.reviewrequest.CreateReviewRequest;
 import com.hamtech.bookstorereviewservice.model.dto.response.ApiResponse;
 import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewResponse;
+import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewSummaryResponse;
 import com.hamtech.bookstorereviewservice.model.entity.Review;
 import com.hamtech.bookstorereviewservice.model.mapper.ReviewMapper;
 import com.hamtech.bookstorereviewservice.repository.ReviewRepository;
@@ -27,7 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 @Service
@@ -75,6 +79,25 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.findByOrderIDOrderByCreatedAtDesc(orderId).stream()
                 .map(this::toEnrichedResponse)
                 .toList();
+    }
+
+    @Override
+    public ReviewSummaryResponse getReviewSummaryByBookId(UUID bookId) {
+        Double averageRating = reviewRepository.calculateAverageRating(bookId);
+        Long totalReviews = reviewRepository.countByBookID(bookId);
+        Map<Integer, Long> ratingDistribution = IntStream.rangeClosed(1, 5)
+                .boxed()
+                .collect(Collectors.toMap(
+                        rating -> rating,
+                        rating -> reviewRepository.countByBookIDAndRating(bookId, rating)
+                ));
+
+        return ReviewSummaryResponse.builder()
+                .bookId(bookId)
+                .averageRating(averageRating == null ? 0.0 : averageRating)
+                .totalReviews(totalReviews == null ? 0L : totalReviews)
+                .ratingDistribution(ratingDistribution)
+                .build();
     }
 
     /**

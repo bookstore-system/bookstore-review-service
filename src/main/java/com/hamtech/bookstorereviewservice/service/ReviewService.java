@@ -2,6 +2,7 @@ package com.hamtech.bookstorereviewservice.service;
 
 import com.hamtech.bookstorereviewservice.model.dto.request.reviewrequest.CreateReviewRequest;
 import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewResponse;
+import com.hamtech.bookstorereviewservice.model.dto.response.reviewresponse.ReviewSummaryResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,8 @@ public interface ReviewService {
     List<UUID> getReviewedBookIdsByOrderId(UUID orderId);
 
     List<ReviewResponse> getReviewsByOrderId(UUID orderId);
+
+    ReviewSummaryResponse getReviewSummaryByBookId(UUID bookId);
 
     long countReviewsByUserId(UUID userId);
 }
